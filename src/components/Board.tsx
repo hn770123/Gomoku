@@ -71,6 +71,7 @@ export const Board: React.FC<BoardProps> = ({ board, onCellClick, winner }) => {
             fill={cell === 'Black' ? '#000' : '#fff'}
             stroke={cell === 'White' ? '#ccc' : 'none'}
             strokeWidth={cell === 'White' ? 1 : 0}
+            style={{ pointerEvents: 'none' }}
           />
         );
       }
