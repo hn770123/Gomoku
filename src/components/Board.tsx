@@ -1,6 +1,13 @@
+/**
+ * 五目並べの盤面を描画するコンポーネントです。
+ * SVGを使用して盤面の線、石、インタラクション領域を描画します。
+ */
 import React from 'react';
 import type { BoardState, Player } from '../game/types';
 
+/**
+ * Boardコンポーネントのプロパティ定義
+ */
 interface BoardProps {
   board: BoardState;
   onCellClick: (x: number, y: number) => void;
@@ -69,8 +76,9 @@ export const Board: React.FC<BoardProps> = ({ board, onCellClick, winner }) => {
       }
 
       // Invisible interaction area
-      // We render this only if the cell is empty and game is not over
-      if (!cell && !winner) {
+      // インタラクション領域（クリック判定用）
+      // 勝敗が決まっていない場合のみレンダリングします
+      if (!winner) {
         interactions.push(
           <rect
             key={`cell-${x}-${y}`}
