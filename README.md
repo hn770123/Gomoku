@@ -1,73 +1,52 @@
-# React + TypeScript + Vite
+# 五目並べ (Gomoku)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+スマートフォンなどの小さな画面でも操作しやすいようにズーム機能を搭載した、シンプルな五目並べゲームです。
 
-Currently, two official plugins are available:
+[Play here](https://hn770123.github.io/Gomoku/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 操作方法
 
-## React Compiler
+1.  **盤面の拡大 (Zoom In)**:
+    *   石を置きたい場所をタップすると、その位置を中心に盤面が拡大されます。
+2.  **石を置く (Place Stone)**:
+    *   拡大された状態で再度タップすると、石を置くことができます。
+    *   石を置くと、自動的にズームアウトします。
+3.  **キャンセル (Zoom Out)**:
+    *   拡大中に "Zoom Out" ボタンを押すと、石を置かずにズームアウトできます。
+4.  **リセット**:
+    *   "New Game" ボタンでゲームを最初からやり直すことができます。
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ルール
 
-## Expanding the ESLint configuration
+*   **盤面サイズ**: 15x15
+*   **手番**: 黒番から開始し、交互に打ちます。
+*   **勝利条件 (フリースタイル)**:
+    *   縦・横・斜めのいずれかに同じ色の石を **5つ以上** 並べたプレイヤーの勝利です。
+    *   禁じ手（長連など）はありません。
+*   **引き分け**: 盤面が全てのマスが埋まった場合は引き分けとなります。
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 技術スタック
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```mermaid
+graph TD
+    User((User))
+    Browser[Web Browser]
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+    subgraph "Frontend (React + TypeScript)"
+        Vite[Vite (Build Tool)]
+        App[React Application]
+        Components[Game Components]
+        Logic[Game Logic]
+    end
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+    subgraph "Hosting"
+        GHP[GitHub Pages]
+    end
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+    User -->|Access| Browser
+    Browser -->|Load| GHP
+    GHP -->|Serve| App
+    App -->|Build with| Vite
+    App -->|Render| Components
+    Components -->|Use| Logic
 ```
