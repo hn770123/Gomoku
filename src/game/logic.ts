@@ -1,16 +1,25 @@
+/**
+ * ゲームのロジック（勝敗判定など）を提供するモジュールです。
+ */
 import type { BoardState, Player } from './types';
 
 export const BOARD_SIZE = 15;
 
 /**
- * Creates an empty 15x15 board.
+ * 15x15の空の盤面を作成します。
  */
 export const createBoard = (): BoardState =>
   Array(BOARD_SIZE).fill(null).map(() => Array(BOARD_SIZE).fill(null));
 
 /**
- * Checks if the player has won after placing a stone at (x, y).
- * Uses the "Freestyle Gomoku" rule (5 or more in a row wins).
+ * 指定された位置(x, y)に石を置いた後の勝敗を判定します。
+ * フリースタイル五目並べのルール（5つ以上並べば勝ち）を採用しています。
+ *
+ * @param board 現在の盤面状態
+ * @param x 石を置いたX座標
+ * @param y 石を置いたY座標
+ * @param player 石を置いたプレイヤー
+ * @returns 勝利した場合はtrue、そうでない場合はfalse
  */
 export const checkWin = (board: BoardState, x: number, y: number, player: Player): boolean => {
   // Although the function assumes the stone is already placed, checking again is safe

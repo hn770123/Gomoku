@@ -1,3 +1,6 @@
+/**
+ * 五目並べのゲーム状態を管理するカスタムフックです。
+ */
 import { useState, useCallback } from 'react';
 import type { BoardState, GameResult, Player } from './types';
 import { createBoard, checkWin } from './logic';
@@ -7,6 +10,9 @@ export const useGomoku = () => {
   const [currentPlayer, setCurrentPlayer] = useState<Player>('Black');
   const [winner, setWinner] = useState<GameResult>(null);
 
+  /**
+   * 指定された位置に石を置く関数
+   */
   const placeStone = useCallback((x: number, y: number) => {
     if (winner || board[y][x]) return;
 

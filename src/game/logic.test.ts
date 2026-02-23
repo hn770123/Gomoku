@@ -1,3 +1,6 @@
+/**
+ * ゲームロジックのテストモジュール
+ */
 import { describe, it, expect } from 'vitest';
 import { createBoard, checkWin, BOARD_SIZE } from './logic';
 import type { Player } from './types';

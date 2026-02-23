@@ -1,3 +1,7 @@
+/**
+ * ゲーム全体を管理するコンポーネントです。
+ * 盤面の状態管理、ズーム機能、ユーザーインターフェースを提供します。
+ */
 import React, { useState } from 'react';
 import { useGomoku } from '../game/useGomoku';
 import { Board, CELL_SIZE, PADDING, TOTAL_SIZE } from './Board';
@@ -8,17 +12,26 @@ export const Game: React.FC = () => {
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomOrigin, setZoomOrigin] = useState({ x: 50, y: 50 });
 
+  /**
+   * セルがクリックされたときの処理
+   * - 未ズーム時: クリック位置を中心にズームイン
+   * - ズーム時: 石を置いてズームアウト（既に石がある場合は何もしない）
+   */
   const handleCellClick = (x: number, y: number) => {
     if (winner) return;
 
     if (!isZoomed) {
-      // Calculate percentage position for transform-origin
+      // ズームイン処理：クリック位置を計算して拡大起点に設定
       const px = ((PADDING + x * CELL_SIZE) / TOTAL_SIZE) * 100;
       const py = ((PADDING + y * CELL_SIZE) / TOTAL_SIZE) * 100;
       setZoomOrigin({ x: px, y: py });
       setIsZoomed(true);
     } else {
-      // Place stone and zoom out
+      // 既に石が置かれている場合は何もしない
+      if (board[y][x]) {
+        return;
+      }
+      // 石を置いてズームアウト
       placeStone(x, y);
       setIsZoomed(false);
     }
