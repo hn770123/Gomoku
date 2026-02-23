@@ -47,7 +47,9 @@ export const Game: React.FC = () => {
   };
 
   const transformStyle: React.CSSProperties = {
-    transform: isZoomed ? 'scale(2.5)' : 'scale(1)',
+    transform: isZoomed
+      ? `translate(${50 - zoomOrigin.x}%, ${50 - zoomOrigin.y}%) scale(2.5)`
+      : 'scale(1)',
     transformOrigin: isZoomed ? `${zoomOrigin.x}% ${zoomOrigin.y}%` : 'center',
     transition: 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
   };
