@@ -69,8 +69,8 @@ export const Board: React.FC<BoardProps> = ({ board, onCellClick, winner }) => {
       }
 
       // Invisible interaction area
-      // We render this only if the cell is empty and game is not over
-      if (!cell && !winner) {
+      // We render this always if the game is not over, so we can detect clicks on stones (for zoom)
+      if (!winner) {
         interactions.push(
           <rect
             key={`cell-${x}-${y}`}
