@@ -1,0 +1,118 @@
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0; /* Remove padding to maximize board size on small screens */
+}
+
+.board-wrapper {
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  background-color: #e0c392;
+  position: relative;
+  /* Use hardware acceleration */
+  transform: translateZ(0);
+}
+
+.status-bar {
+  margin-bottom: 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0 16px;
+}
+
+.current-player {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.winner-announcement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: #d32f2f;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reset-button {
+  padding: 8px 20px;
+  font-size: 1rem;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: background-color 0.2s;
+}
+
+.reset-button:active {
+  background-color: #1565c0;
+  transform: translateY(1px);
+}
+
+.zoom-out-button {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  background-color: #757575;
+  color: white;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.zoom-out-button:active {
+  background-color: #616161;
+}
+
+.player-indicator {
+  padding: 4px 12px;
+  border-radius: 12px;
+  min-width: 60px;
+  text-align: center;
+}
+
+.player-indicator.black {
+  background-color: #212121;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.player-indicator.white {
+  background-color: #f5f5f5;
+  color: #212121;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.board-transform-layer {
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+}
+
+.instruction {
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+  padding: 0 16px;
+}
