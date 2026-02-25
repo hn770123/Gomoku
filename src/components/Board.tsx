@@ -10,7 +10,7 @@ import type { BoardState, Player } from '../game/types';
  */
 interface BoardProps {
   board: BoardState;
-  onCellClick: (x: number, y: number) => void;
+  onCellClick: (x: number, y: number, event: React.MouseEvent) => void;
   winner: Player | 'Draw' | null;
 }
 
@@ -88,7 +88,7 @@ export const Board: React.FC<BoardProps> = ({ board, onCellClick, winner }) => {
             width={CELL_SIZE}
             height={CELL_SIZE}
             fill="transparent"
-            onClick={() => onCellClick(x, y)}
+            onClick={(e) => onCellClick(x, y, e)}
             style={{ cursor: 'pointer' }}
           />
         );

@@ -17,13 +17,32 @@ export const Game: React.FC = () => {
    * - 未ズーム時: クリック位置を中心にズームイン
    * - ズーム時: 石を置いてズームアウト（既に石がある場合は何もしない）
    */
-  const handleCellClick = (x: number, y: number) => {
+  const handleCellClick = (x: number, y: number, event: React.MouseEvent) => {
     if (winner) return;
 
     if (!isZoomed) {
       // ズームイン処理：クリック位置を計算して拡大起点に設定
-      const px = ((PADDING + x * CELL_SIZE) / TOTAL_SIZE) * 100;
-      const py = ((PADDING + y * CELL_SIZE) / TOTAL_SIZE) * 100;
+      const svg = (event.currentTarget as Element).closest('svg');
+      let px = 50;
+      let py = 50;
+
+      if (svg) {
+        const rect = svg.getBoundingClientRect();
+        const clickX = event.clientX - rect.left;
+        const clickY = event.clientY - rect.top;
+        px = (clickX / rect.width) * 100;
+        py = (clickY / rect.height) * 100;
+
+        // ズーム時の表示領域を制限（端に行き過ぎないようにする）
+        // 20%〜80%の範囲に制限
+        px = Math.max(20, Math.min(80, px));
+        py = Math.max(20, Math.min(80, py));
+      } else {
+        // フォールバック（通常はここに来ない）
+        px = ((PADDING + x * CELL_SIZE) / TOTAL_SIZE) * 100;
+        py = ((PADDING + y * CELL_SIZE) / TOTAL_SIZE) * 100;
+      }
+
       setZoomOrigin({ x: px, y: py });
       setIsZoomed(true);
     } else {
